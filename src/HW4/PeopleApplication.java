@@ -57,11 +57,29 @@ public class PeopleApplication {
           System.out.println("Working!");
           break;
         case 2: //displaynames
+          if(Person.getTotPeople() == 0)
+          {
+            JOptionPane.showMessageDialog(null, "There are no people to get"
+                    + " information from!", "ERROR", 0);
+            break;
+          }
           JOptionPane.showMessageDialog(null, "All persons:\n" + Person.listPersons(), "List of Persons", 1);
           break;
         case 3: //getinfo
+          if(Person.getTotPeople() == 0)
+          {
+            JOptionPane.showMessageDialog(null, "There are no people to get"
+                    + " information from!", "ERROR", 0);
+            break;
+          }
           break;
         case 4: //averageage
+          if(Person.getTotPeople() == 0)
+          {
+            JOptionPane.showMessageDialog(null, "There are no people to get"
+                    + " information from!", "ERROR", 0);
+            break;
+          }
           JOptionPane.showMessageDialog(null, "Average age of all persons is: " 
                   + Person.averageAge(), "Average Age", 1);
           break;
