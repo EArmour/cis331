@@ -11,15 +11,9 @@ import javax.swing.*;
 public class PeopleApplication {
   public static void main (String args[]) 
   {
-    Person.addPerson("Evan", "Armour", 10, "Single", "MaLe");
-    Person.addPerson("Rory", "Salzberger", 20, "Single", "MaLe");
-    Person.addPerson("jeff", "may", 30, "Single", "MaLe");
-    Person.addPerson("susan", "waRNER", 40, "MARRied", "feMaLe");
-    Person.addPerson("Gilbert", "Armour", 55, "Single", "MaLe");
-    Person.addPerson("Morgan", "Wampler", 60, "Single", "feMaLe");
-    Person.addPerson("Amanda", "Farmer", 70, "Single", "feMaLe");
-    Person.addPerson("james", "Cameron", 80, "Single", "MaLe");
-    Person.addPerson("Andrew", "Andrews", 90, "Single", "MaLe");
+    Person.addPerson("Evan", "Armour", 21, "Single", "MaLe");
+    Person.addPerson("Rory", "SalZberger", 20, "Single", "MaLe");
+    Person.addPerson("jeff", "may", 110, "MARrieD", "MaLe");
     
     menuChoice();
   }
@@ -54,25 +48,65 @@ public class PeopleApplication {
       switch(choiceInt)
       {
         case 1: //addperson
-          System.out.println("Working!");
+          int age;
+          String fName = JOptionPane.showInputDialog(null, 
+                  "Please enter the person's first name:", "Input Name", 3);
+          String lName = JOptionPane.showInputDialog(null,  
+                  "Please enter the person's last name:", "Input Name", 3);
+          String ageString = JOptionPane.showInputDialog(null,  
+                  "Please enter the person's age:", "Input Age", 3);
+          try
+          {
+            age = Integer.parseInt(ageString);
+          }
+          catch (Exception e)
+          {
+            age = -1;
+          }
+          String gender = JOptionPane.showInputDialog(null,  
+                  "Please enter the person's gender:", "Input Gender", 3);
+          String marital = JOptionPane.showInputDialog(null, "Please enter the "
+                  + "person's marital status:", "Input Status", 3);
+          
+          if(Person.addPerson(fName, lName, age, marital, gender))
+            JOptionPane.showMessageDialog(null, "Person successfully added!", 
+                    "Success!", 1);
+          else
+            JOptionPane.showMessageDialog(null, "Maximum amount of persons "
+                    + "reached! New person couldn't be added", "ERROR", 0);
+          
           break;
         case 2: //displaynames
-          if(noPeople())
-            break;
-          
-          JOptionPane.showMessageDialog(null, "All persons:\n" + Person.listPersons(), "List of Persons", 1);
+          if(!noPeople())
+          {
+            JOptionPane.showMessageDialog(null, "All persons:\n" + 
+                    Person.listPersons(), "List of Persons", 1);
+          }
           break;
         case 3: //getinfo
-          if(noPeople())
-            break;
-          
+          if(!noPeople())
+          {
+            String find = JOptionPane.showInputDialog(null, "Please enter the "
+                    + "full name of the person you wish to find "
+                    + "(ex: 'John Smith'):", "Find Person", 3);
+            int index = Person.findPerson(find);
+            if (index == -1)
+              JOptionPane.showMessageDialog(null, "No person with that name was"
+                      + " found!", "ERROR", 0);
+            else
+            {
+              Person foundPerson = Person.getPerson(index);
+              JOptionPane.showMessageDialog(null, new JTextArea
+                      (foundPerson.personInfo(true)), "Person Info", 3);
+            }
+          }
           break;
         case 4: //averageage
-          if(noPeople())
-            break;
-          
+          if(!noPeople())
+          {
           JOptionPane.showMessageDialog(null, "Average age of all persons is: " 
                   + Person.averageAge(), "Average Age", 1);
+          }
           break;
         case 5: //quit
           break;
@@ -82,6 +116,7 @@ public class PeopleApplication {
     }while(choiceInt != 5);
   }
   
+  // Test if there are no Persons instantiated before trying to get their info
   public static boolean noPeople()
   {
     if(Person.getTotPeople() == 0)

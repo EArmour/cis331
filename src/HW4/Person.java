@@ -149,7 +149,8 @@ public class Person
     
     for (int i=0; i<totPeople; i++)
     {
-      names += people[i].getfirstName() + " " + people[i].getlastName() + ", ";
+      names += "\n" + (i+1) + ". " + people[i].getfirstName() + " " 
+              + people[i].getlastName();
     }
     
     return names;
