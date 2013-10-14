@@ -3,18 +3,15 @@
  * Homework 4
  * Purpose: This assignment introduces object-oriented concepts, such as 
  * encapsulation and information hiding, as well as method overloading and 
- * manipulating class instances with getters and setters.
+ * manipulating class instances with getters and setters. As revised, it also
+ * covers static class methods and attributes.
 */
 package HW4;
 import javax.swing.*;
 
 public class PeopleApplication {
   public static void main (String args[]) 
-  {
-    Person.addPerson("Evan", "Armour", 21, "Single", "MaLe");
-    Person.addPerson("Rory", "SalZberger", 20, "Single", "MaLe");
-    Person.addPerson("jeff", "may", 110, "MARrieD", "MaLe");
-    
+  {    
     menuChoice();
   }
 
