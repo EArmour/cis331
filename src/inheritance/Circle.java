@@ -2,6 +2,7 @@ package inheritance;
 public class Circle {
   /** The radius of the circle */
   private double radius;
+  public final double PI = 3.14159;
 
   /** Construct a circle with radius 1 */
   public Circle() {
