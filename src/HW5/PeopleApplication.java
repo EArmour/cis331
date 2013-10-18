@@ -8,7 +8,9 @@ import javax.swing.*;
 
 public class PeopleApplication {
   public static void main (String args[]) 
-  {    
+  {
+    Person.addPerson("Evan", "Armour", 21, "Single", "Male");
+    Faculty.addFaculty("Jeff", "MAy", 99, "MarrIED", "MALE", "FULL PROFEssoR");
     menuChoice();
   }
 

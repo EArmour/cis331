@@ -12,9 +12,9 @@ public class Person
   private String maritalStatus;
   private String gender;
   
-  private static int totPeople = 0;
-  private static final int MAXPEOPLE = 10;
-  private static Person[] people = new Person[MAXPEOPLE];
+  protected static int totPeople = 0;
+  protected static final int MAXPEOPLE = 10;
+  protected static Person[] people = new Person[MAXPEOPLE];
   
 
   public Person() 
@@ -36,10 +36,6 @@ public class Person
     this.setGender(gender);
   }
   
-  public String getfirstName() {
-    return firstName;
-  }
-  
   public static boolean addPerson(String firstName, String lastName, int age, 
           String maritalStatus, String gender) 
   {
@@ -51,6 +47,10 @@ public class Person
     
     totPeople++;
     return true;
+  }
+  
+  public String getfirstName() {
+    return firstName;
   }
 
   public void setfirstName(String firstName) {
@@ -119,7 +119,8 @@ public class Person
     String info = "First: " + this.firstName + "\tLast: " + this.lastName;
     if (fullData)
       info += "\tAge: " + this.age + "\tGender: " + this.gender + 
-              "\tMarital Status: " + this.maritalStatus;
+              "\tMarital Status: " + this.maritalStatus + "\tType: " + 
+              this.toString();
     return info;
   }
   
@@ -149,8 +150,8 @@ public class Person
     
     for (int i=0; i<totPeople; i++)
     {
-      names += "\n" + (i+1) + ". " + people[i].getfirstName() + " " 
-              + people[i].getlastName();
+      names += "\n" + (i+1) + ". " + people[i].getfirstName() + " " + 
+              people[i].getlastName() + " (" + people[i].toString() + ")";
     }
     
     return names;
@@ -170,5 +171,11 @@ public class Person
     }
     
     return index;
+  }
+  
+  @Override
+  public String toString()
+  {
+    return "Person";
   }
 }
