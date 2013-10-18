@@ -33,11 +33,15 @@ public static boolean addFaculty(String firstName, String lastName, int age,
     totPeople++;
     return true;
   }
+
+  public String getRank() {
+    return rank;
+  }
   
   public void setRank(String rank)
   {
     rank = rank.toLowerCase();
-    this.rank = (rank.matches("instructor|assistant professor|full professor")) 
+    this.rank = (rank.matches("instructor|full professor")) 
             ? rank : "assistant professor";
   }
   
@@ -51,7 +55,7 @@ public static boolean addFaculty(String firstName, String lastName, int age,
   {
     String info = super.personInfo(false);
     if (fullData)
-      info = super.personInfo(true) + "\t Rank: " + this.rank;
+      info = super.personInfo(true) + "\t Rank: " + this.getRank();
     
     return info;
   }
