@@ -11,6 +11,7 @@ public class PeopleApplication {
   {
     Person.addPerson("Evan", "Armour", 21, "Single", "Male");
     Faculty.addFaculty("Jeff", "MAy", 99, "MarrIED", "MALE", "FULL PROFEssoR");
+    Student.addStudent("Samus", "ARAN", 35, "DiVORCed", "FEMalE", "accounting", "JUNIOR", 3.9);
     menuChoice();
   }
 

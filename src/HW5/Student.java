@@ -27,6 +27,20 @@ public class Student extends Person {
     this.setClassStanding(classStanding);
     this.setGPA(GPA);
   }
+  
+public static boolean addStudent(String firstName, String lastName, int age, 
+          String maritalStatus, String gender, String major, 
+          String classStanding, double GPA) 
+  {
+    if (totPeople == MAXPEOPLE)
+      return false;
+    
+    people[totPeople] = new Student(firstName, lastName, age, 
+            maritalStatus, gender, major, classStanding, GPA);
+    
+    totPeople++;
+    return true;
+  }
 
   public String getMajor() {
     return major;
@@ -46,7 +60,7 @@ public class Student extends Person {
   public void setClassStanding(String classStanding) 
   {
     classStanding = classStanding.toLowerCase();
-    this.classStanding = (classStanding.matches("sophomore|junior|senior")) 
+    this.classStanding = classStanding.matches("sophomore|junior|senior")
             ? classStanding : "freshman";
   }
 
@@ -55,12 +69,23 @@ public class Student extends Person {
   }
 
   public void setGPA(double GPA) {
-    this.GPA = GPA;
+    this.GPA = (GPA > 0.0 && GPA < 4.0) ? GPA : 0.0;
   }
-  
+
   @Override
   public String toString() {
     return "Student";
   }
 
+  @Override
+  public String personInfo(boolean fullData)
+  {
+    String info = super.personInfo(false);
+    if (fullData)
+      info = super.personInfo(true) + "\tMajor: " + this.getMajor() + 
+              "\tStanding: " + this.getClassStanding() + 
+              "\tGPA: " + this.getGPA();
+    
+    return info;
+  }
 }

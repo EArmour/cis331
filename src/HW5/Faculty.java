@@ -55,7 +55,7 @@ public static boolean addFaculty(String firstName, String lastName, int age,
   {
     String info = super.personInfo(false);
     if (fullData)
-      info = super.personInfo(true) + "\t Rank: " + this.getRank();
+      info = super.personInfo(true) + "\tRank: " + this.getRank();
     
     return info;
   }
