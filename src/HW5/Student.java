@@ -49,7 +49,7 @@ public static boolean addStudent(String firstName, String lastName, int age,
   public void setMajor(String major) 
   {
     major = major.toLowerCase();
-    this.major = (major.matches("instructor|assistant professor|full professor")) 
+    this.major = (major.matches("cis|marketing|management|finance|accounting")) 
             ? major : "undeclared";
   }
 
@@ -69,7 +69,7 @@ public static boolean addStudent(String firstName, String lastName, int age,
   }
 
   public void setGPA(double GPA) {
-    this.GPA = (GPA > 0.0 && GPA < 4.0) ? GPA : 0.0;
+    this.GPA = (GPA > 0.0 && GPA <= 4.0) ? GPA : 0.0;
   }
 
   @Override
@@ -87,5 +87,26 @@ public static boolean addStudent(String firstName, String lastName, int age,
               "\tGPA: " + this.getGPA();
     
     return info;
+  }
+  
+  public static String showOverallGPA()
+  {
+    double avg = 0.0D;
+    int students = 0;
+    
+    for(int i=0; i < totPeople; i++)
+    {
+      if(people[i].toString().equals("Student"))
+      {
+        avg += ((Student)people[i]).getGPA();
+        students++;
+      }
+    }
+    
+    if(students == 0)
+      return "There are no students to get the GPA of!";
+ 
+    return "There are " + students + " students, with an average GPA of " + 
+            (avg/students);
   }
 }

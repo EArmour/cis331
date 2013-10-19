@@ -11,7 +11,8 @@ public class PeopleApplication {
   {
     Person.addPerson("Evan", "Armour", 21, "Single", "Male");
     Faculty.addFaculty("Jeff", "MAy", 99, "MarrIED", "MALE", "FULL PROFEssoR");
-    Student.addStudent("Samus", "ARAN", 35, "DiVORCed", "FEMalE", "accounting", "JUNIOR", 3.9);
+    Student.addStudent("Samus", "ARAN", 35, "DiVORCed", "FEMalE", "accounting", "JUNIOR", 4.0);
+    Student.addStudent("Nathan", "drake", 40, "singLE", "MALE", "finance", "SEnior", 0.0);
     menuChoice();
   }
 
@@ -26,7 +27,8 @@ public class PeopleApplication {
             + " 2: Display All Names\n"
             + " 3: Get Person Info\n"
             + " 4: Display Average Age\n"
-            + " 5: Quit",
+            + " 5: Display Average Student GPA\n"
+            + " 6: Quit",
             "Person Managment Console!", 3);
 
       try
@@ -38,7 +40,7 @@ public class PeopleApplication {
         choiceInt = 666;
       }
 
-      if(choiceInt > 5)
+      if(choiceInt > 6)
         JOptionPane.showMessageDialog(null, "ERROR: Incorrect choice or "
                 + "non-integer entered!", "ERROR", 0);
 
@@ -105,12 +107,17 @@ public class PeopleApplication {
                   + Person.averageAge(), "Average Age", 1);
           }
           break;
-        case 5: //quit
+        case 5: //averagegpa
+          if(!noPeople())
+            JOptionPane.showMessageDialog(null, Student.showOverallGPA(), 
+                    "Average GPA", 1);
+          break;
+        case 6: //quit
           break;
         default:
             break;
       }
-    }while(choiceInt != 5);
+    }while(choiceInt != 6);
   }
   
   // Test if there are no Persons instantiated before trying to get their info
