@@ -5,7 +5,7 @@
 package HW5;
 
 public class Student extends Person {
- 
+
   private String major;
   private String classStanding;
   private double GPA;

@@ -48,6 +48,8 @@ public class PeopleApplication {
       {
         case 1: //addperson
           int age;
+          String type = JOptionPane.showInputDialog(null, "Is this a Faculty or"
+                  + " Student?\nLeave blank for default Person.", "Type", 3);
           String fName = JOptionPane.showInputDialog(null, 
                   "Please enter the person's first name:", "Input Name", 3);
           String lName = JOptionPane.showInputDialog(null,  
@@ -60,19 +62,57 @@ public class PeopleApplication {
           }
           catch (Exception e)
           {
-            age = -1;
+            age = 0;
           }
           String gender = JOptionPane.showInputDialog(null,  
                   "Please enter the person's gender:", "Input Gender", 3);
           String marital = JOptionPane.showInputDialog(null, "Please enter the "
                   + "person's marital status:", "Input Status", 3);
-          
-          if(Person.addPerson(fName, lName, age, marital, gender))
-            JOptionPane.showMessageDialog(null, "Person successfully added!", 
-                    "Success!", 1);
-          else
-            JOptionPane.showMessageDialog(null, "Maximum amount of persons "
-                    + "reached! New person couldn't be added", "ERROR", 0);
+          if(type.toLowerCase().startsWith("f")) //Faculty
+          {
+            String rank = JOptionPane.showInputDialog(null, 
+                    "Please enter the faculty's rank:", "Input Rank", 3);
+            if(Faculty.addFaculty(fName, lName, age, marital, gender, rank))
+              JOptionPane.showMessageDialog(null, "Faculty successfully added!", 
+                      "Success!", 1);
+            else
+              JOptionPane.showMessageDialog(null, "Maximum amount of persons "
+                      + "reached! New Faculty couldn't be added", "ERROR", 0); 
+          }
+          else if (type.toLowerCase().startsWith("s")) //Student
+          {
+            double GPA;
+            String major = JOptionPane.showInputDialog(null, 
+                    "Please enter the student's major:", "Input Major", 3);
+            String standing = JOptionPane.showInputDialog(null, 
+                    "Please enter the student's standing:", "Input Standing", 3);
+            String GPAString = JOptionPane.showInputDialog(null, 
+                    "Please enter the student's GPA:", "Input GPA", 3);
+            try 
+            {
+             GPA = Double.parseDouble(GPAString);
+            } 
+            catch (Exception e) 
+            {
+              GPA = 0.0;
+            }
+            if(Student.addStudent(fName, lName, age, marital, gender, major, 
+                    standing, GPA))
+              JOptionPane.showMessageDialog(null, "Student  successfully added!", 
+                      "Success!", 1);
+            else
+              JOptionPane.showMessageDialog(null, "Maximum amount of persons "
+                      + "reached! New Student couldn't be added", "ERROR", 0); 
+          }
+          else //Person
+          {
+            if(Person.addPerson(fName, lName, age, marital, gender))
+              JOptionPane.showMessageDialog(null, "Person successfully added!", 
+                      "Success!", 1);
+            else
+              JOptionPane.showMessageDialog(null, "Maximum amount of persons "
+                      + "reached! New person couldn't be added", "ERROR", 0); 
+          }
           
           break;
         case 2: //displaynames
