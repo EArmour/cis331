@@ -11,7 +11,7 @@ public class Faculty extends Person {
   public Faculty()
   {
     super();
-    this.rank = "Assistant Professor";
+    this.rank = "assistant professor";
   }
   
   public Faculty(String firstName, String lastName, int age, 

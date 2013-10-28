@@ -1,7 +1,8 @@
 /* Author Name: Evan Armour
  * CIS331, Section 2, Fall 2013
  * Homework 5
- * Purpose: 
+ * Purpose: This assignment elaborates on HW4, and introduces sophisticated
+ * subclasses. Particularly emphasized is method overriding and dynamic binding.
 */
 package HW5;
 import javax.swing.*;
@@ -9,10 +10,6 @@ import javax.swing.*;
 public class PeopleApplication {
   public static void main (String args[]) 
   {
-    Person.addPerson("Evan", "Armour", 21, "Single", "Male");
-    Faculty.addFaculty("Jeff", "MAy", 99, "MarrIED", "MALE", "FULL PROFEssoR");
-    Student.addStudent("Samus", "ARAN", 35, "DiVORCed", "FEMalE", "accounting", "JUNIOR", 4.0);
-    Student.addStudent("Nathan", "drake", 40, "singLE", "MALE", "finance", "SEnior", 0.0);
     menuChoice();
   }
 
