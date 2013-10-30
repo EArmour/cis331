@@ -2,7 +2,8 @@
  * CIS331, Section 2, Fall 2013
  * Homework 5
  * Purpose: This assignment elaborates on HW4, and introduces sophisticated
- * subclasses. Particularly emphasized is method overriding and dynamic binding.
+ * subclasses. Particularly emphasized is method overriding, dynamic binding,
+ * and polymorphism.
 */
 package HW5;
 import javax.swing.*;
