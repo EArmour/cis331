@@ -16,6 +16,8 @@ public class Person
   protected static final int MAXPEOPLE = 10;
   protected static Person[] people = new Person[MAXPEOPLE];
   
+  public static String[] maritalChoices = {"Unknown","Married","Divorced",
+    "Widowed","Single"};
 
   public Person() 
   {
@@ -171,5 +173,21 @@ public class Person
     }
     
     return index;
+  }
+  
+  @Override
+  public String toString()
+  {
+    return this.getfirstName() + " " + this.getlastName();
+  }
+  
+  public static void readPeople()
+  {
+    
+  }
+  
+  public static void writePeople()
+  {
+    
   }
 }
