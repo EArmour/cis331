@@ -1,23 +1,20 @@
 /* Author Name: Evan Armour
  * CIS331, Section 2, Fall 2013
  * Homework 6
- * Purpose:
+ * Purpose: This assignment introduced GUI development in Java, using AWT and 
+ * Swing. Therefore, it also introduces interfaces, listeners, and event 
+ * handlers in order to deal with user interaction through GUI elements.
 */
 package HW6;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 
-public class PeopleGUI extends JFrame {
-
+public class PeopleGUI extends JFrame 
+{
   public static void main (String args[]) 
-  {
-    Person.addPerson("Evan", "Armour", 21, "Single", "male");
-    Person.addPerson("Jeff", "may", 55, "marrIED", "MALe");
-    
+  {    
     PeopleGUI frame = new PeopleGUI();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
@@ -34,7 +31,8 @@ public class PeopleGUI extends JFrame {
     final JTextField txtFName = new JTextField(12);
     final JTextField txtLName = new JTextField(12);
     final JTextField txtAge = new JTextField(2);
-    final JComboBox boxMarital = new JComboBox(Person.maritalChoices);
+    final JComboBox boxMarital = new JComboBox(new String[] {"Unknown",
+      "Married","Divorced","Widowed","Single"});
     
     final JRadioButton rdioGenderMale = new JRadioButton("Male");
     final JRadioButton rdioGenderFemale = new JRadioButton("Female");
@@ -50,17 +48,17 @@ public class PeopleGUI extends JFrame {
     inputPanel.add(new LabelComponent("Age", txtAge));
     inputPanel.add(new LabelComponent("Marital Status", boxMarital));
     
-    //This can't possibly be the best way to do this
+    //Radio buttons in a panel of their own to center label
     JPanel radioBtnPanel = new JPanel(new FlowLayout());
     radioBtnPanel.add(rdioGenderMale);
     radioBtnPanel.add(rdioGenderFemale);
     radioBtnPanel.add(rdioGenderUnknown);
-    
     JPanel radioPanel = new JPanel(new BorderLayout());
     radioPanel.add(new JLabel("Gender", SwingConstants.CENTER), 
             BorderLayout.NORTH);
     radioPanel.add(radioBtnPanel, BorderLayout.SOUTH);
     inputPanel.add(radioPanel);
+    rdioGenderUnknown.setSelected(true);
     
     /* ====================BUTTONS IN GRID LAYOUT==================== */
     JButton btnAdd = new JButton("Add Person");
@@ -81,16 +79,72 @@ public class PeopleGUI extends JFrame {
     add(buttonPanel, BorderLayout.SOUTH);
     
     /* ====================EVENT LISTENERS==================== */
+    //Add Person
     btnAdd.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
-        //Add new person
+        if(txtFName.getText().equals("") || txtLName.getText().equals("") || 
+                txtAge.getText().equals(""))
+        {
+          JOptionPane.showMessageDialog(rootPane, "All fields must be filled "
+                  + "out!", "ERROR", 0);
+          return;
+        }
+        if(txtFName.getText().length() > 10 || txtLName.getText().length() > 10 
+                || txtAge.getText().length() > 3)
+        {
+          JOptionPane.showMessageDialog(rootPane, "Names must be 10 letters or"
+                  + " less, age 3 digits or less", "ERROR", 0);
+          return;
+        }
+        
+        int age;
+        try {
+          age = Integer.parseInt(txtAge.getText());
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(rootPane, "Age must be an integer!", 
+                  "ERROR", 0);
+          return;
+        }
+        
+        String gender = "Unknown";
+        if(rdioGenderMale.isSelected())
+          gender = "Male";
+        else if(rdioGenderFemale.isSelected())
+          gender = "Female";
+        
+        Person.addPerson(txtFName.getText(), txtLName.getText(), 
+                age, boxMarital.getSelectedItem().toString(), gender);
+        JOptionPane.showMessageDialog(rootPane, Person.getPerson(Person.
+                totPeople - 1).toString() + " has been added successfully!");
+        lstPeople.updateUI();
+        lstPeople.setSelectedIndex(Person.totPeople - 1);
       }
     });
+    //Modify Person
     btnMod.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
-        //Modify selected person's info
+        if(lstPeople.getSelectedIndex() >= Person.totPeople)
+          return;
+
+        Person selected = Person.getPerson(lstPeople.getSelectedIndex());
+        selected.setfirstName(txtFName.getText());
+        selected.setlastName(txtLName.getText());
+        selected.setAge(Integer.parseInt(txtAge.getText()));
+        
+        selected.setMaritalStatus(boxMarital.getSelectedItem().toString());
+        String gender = "Unknown";
+        if(rdioGenderMale.isSelected())
+          gender = "Male";
+        else if(rdioGenderFemale.isSelected())
+          gender = "Female";
+        selected.setGender(gender);
+        
+        JOptionPane.showMessageDialog(rootPane, selected.toString() + 
+                " has been modified successfully!");
+        lstPeople.updateUI();
       }
     });
+    //Clear Fields
     btnClear.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
         txtFName.setText(null);
@@ -100,37 +154,45 @@ public class PeopleGUI extends JFrame {
         boxMarital.setSelectedIndex(0);
       }
     });
+    //Read from C:/Temp/people.txt
     btnRead.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
-        //Read all people from people.txt
+        Person.readPeople();
+        lstPeople.updateUI();
       }
     });
+    //Write to C:/Temp/peopleOutput.txt
     btnWrite.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
-        //Write all people to people.txt
+        Person.writePeople();
+        JOptionPane.showMessageDialog(null, "Data successfully saved to "
+                + "C:/Temp/peopleOutput.txt", "Saved", 1);
       }
     });
+    //Listen for selecting any person from the list
     lstPeople.addListSelectionListener(new ListSelectionListener() {
       public void valueChanged(ListSelectionEvent lse) {
         //When person selected, display info in components
+        //TODO:Implement counter so user can't just keep clicking add with a single person selected
+        if(lstPeople.getSelectedIndex() == -1 || lstPeople.getSelectedIndex() >= Person.totPeople)
+          return;
+
         Person selected = Person.getPerson(lstPeople.getSelectedIndex());
-        txtFName.setText(selected.getGender());
+        txtFName.setText(selected.getfirstName());
         txtLName.setText(selected.getlastName());
         txtAge.setText(Integer.toString(selected.getAge()));
         boxMarital.setSelectedItem(selected.getMaritalStatus());
-        if(selected.getGender().equals("male"))
+        if(selected.getGender().equals("Male"))
           rdioGenderMale.setSelected(true);
-        else if(selected.getGender().equals("female"))
+        else if(selected.getGender().equals("Female"))
           rdioGenderFemale.setSelected(true);
         else
           rdioGenderUnknown.setSelected(true);
       }
     });
-    
   }
   
-  // Class for a labeled component
-  // Courtesy of Dr. May
+  // Class for a labeled component, courtesy of Dr. May
   class LabelComponent extends JPanel
   {
     JLabel l;
@@ -145,4 +207,3 @@ public class PeopleGUI extends JFrame {
     }
   }
 }
-

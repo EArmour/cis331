@@ -3,6 +3,9 @@
  * Homework 6
 */
 package HW6;
+import java.io.*;
+import java.util.Scanner;
+import javax.swing.*;
 
 public class Person 
 {
@@ -15,17 +18,14 @@ public class Person
   protected static int totPeople = 0;
   protected static final int MAXPEOPLE = 10;
   protected static Person[] people = new Person[MAXPEOPLE];
-  
-  public static String[] maritalChoices = {"Unknown","Married","Divorced",
-    "Widowed","Single"};
 
   public Person() 
   {
     this.firstName = "FIRST";
     this.lastName = "LAST";
     this.age = 0;
-    this.maritalStatus = "unknown";
-    this.gender = "unknown";
+    this.maritalStatus = "Unknown";
+    this.gender = "Unknown";
   }
 
   public Person(String firstName, String lastName, int age, 
@@ -56,8 +56,7 @@ public class Person
   }
 
   public void setfirstName(String firstName) {
-    this.firstName = (firstName.substring(0,1).toUpperCase() + 
-            firstName.substring(1).toLowerCase());
+    this.firstName = toPrettyText(firstName);
   }
 
   public String getlastName() {
@@ -65,8 +64,7 @@ public class Person
   }
 
   public void setlastName(String lastName) {
-    this.lastName = (lastName.substring(0,1).toUpperCase() + 
-            lastName.substring(1).toLowerCase());;
+    this.lastName = toPrettyText(lastName);
   }
 
   public int getAge() {
@@ -85,12 +83,12 @@ public class Person
   }
 
   public void setMaritalStatus(String maritalStatus) {
-    maritalStatus = maritalStatus.toLowerCase();
+    maritalStatus = toPrettyText(maritalStatus);
     
-    if(maritalStatus.matches("married|divorced|widowed|single"))
+    if(maritalStatus.matches("Married|Divorced|Widowed|Single"))
       this.maritalStatus = maritalStatus;
     else
-      this.maritalStatus = "unknown";
+      this.maritalStatus = "Unknown";
   }
 
   public String getGender() {
@@ -98,12 +96,12 @@ public class Person
   }
 
   public void setGender(String gender) {
-    gender = gender.toLowerCase();
+    gender = toPrettyText(gender);
     
-    if(gender.matches("male|female"))
+    if(gender.matches("Male|Female"))
       this.gender = gender;
     else
-      this.gender = "unknown";
+      this.gender = "Unknown";
   }
   
   public static int getTotPeople()
@@ -121,8 +119,7 @@ public class Person
     String info = "First: " + this.firstName + "\tLast: " + this.lastName;
     if (fullData)
       info += "\tAge: " + this.age + "\tGender: " + this.gender + 
-              "\tMarital Status: " + this.maritalStatus + "\tType: " + 
-              this.toString();
+              "\tMarital Status: " + this.maritalStatus;
     return info;
   }
   
@@ -183,11 +180,60 @@ public class Person
   
   public static void readPeople()
   {
+    //Reset person count to overwrite any existing data
+    totPeople = 0;
     
+    try
+    {
+      File file = new File("C:/Temp/people.txt");
+      Scanner input = new Scanner(file);
+
+      while (input.hasNext())
+      {
+        if(addPerson(input.next(), input.next(), input.nextInt(), input.next(), 
+                input.next()))
+          continue;
+        else {
+          JOptionPane.showMessageDialog(null, "Maximum number of people "
+                  + "reached!\nNot all people from the file could be added",
+                  "Error Initializing Data!", 0);
+          break;
+        }  
+      }
+      input.close();
+    }
+    catch(Exception e)
+    {
+      JOptionPane.showMessageDialog(null, "Error loading file: " + e.toString(),
+              "Error Initializing Data!", 0);
+    }
   }
   
   public static void writePeople()
   {
-    
+    try
+    {
+      File file = new File("C:/Temp/peopleOutput.txt");
+      FileWriter output = new FileWriter(file);
+
+      for(int i=0; i<totPeople; i++)
+      {
+        Person curr = people[i];
+        output.write(curr.getfirstName() + "\t" + curr.getlastName() + "\t" + 
+                curr.getAge() + "\t" + curr.getMaritalStatus() + "\t" + 
+                curr.getGender() + "\n");
+      }
+      output.close();
+    }
+    catch(Exception e)
+    {
+      JOptionPane.showMessageDialog(null, "Error writing file: " + e.toString(),
+              "Error Saving Data!", 0);
+    }
+  }
+  
+  //Capitalize only first letter for nice-looking text
+  public String toPrettyText(String ugly) {
+    return ugly.substring(0,1).toUpperCase() + ugly.substring(1).toLowerCase();
   }
 }
