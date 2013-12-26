@@ -173,7 +173,6 @@ public class PeopleGUI extends JFrame
     lstPeople.addListSelectionListener(new ListSelectionListener() {
       public void valueChanged(ListSelectionEvent lse) {
         //When person selected, display info in components
-        //TODO:Implement counter so user can't just keep clicking add with a single person selected
         if(lstPeople.getSelectedIndex() == -1 || lstPeople.getSelectedIndex() >= Person.totPeople)
           return;
 

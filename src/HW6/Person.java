@@ -46,7 +46,6 @@ public class Person
     
     people[totPeople] = new Person(firstName, lastName, age, 
             maritalStatus, gender);
-    
     totPeople++;
     return true;
   }
@@ -72,10 +71,7 @@ public class Person
   }
 
   public void setAge(int age) {
-    if(age < 1)
-      this.age = 0;
-    else
-      this.age = age;
+    this.age = (age < 1) ? 0 : age;
   }
 
   public String getMaritalStatus() {
@@ -126,12 +122,10 @@ public class Person
   public static double averageAge()
   {
     double avg = 0D;
-    
     for (int i=0; i<totPeople; i++)
     {
       avg += people[i].getAge();
     }
-    
     return (Double) avg / totPeople; 
   }
   
@@ -168,11 +162,9 @@ public class Person
         break;
       }
     }
-    
     return index;
   }
   
-  @Override
   public String toString()
   {
     return this.getfirstName() + " " + this.getlastName();
@@ -202,8 +194,7 @@ public class Person
       }
       input.close();
     }
-    catch(Exception e)
-    {
+    catch(Exception e) {
       JOptionPane.showMessageDialog(null, "Error loading file: " + e.toString(),
               "Error Initializing Data!", 0);
     }
@@ -225,8 +216,7 @@ public class Person
       }
       output.close();
     }
-    catch(Exception e)
-    {
+    catch(Exception e) {
       JOptionPane.showMessageDialog(null, "Error writing file: " + e.toString(),
               "Error Saving Data!", 0);
     }
