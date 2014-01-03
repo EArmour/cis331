@@ -22,10 +22,10 @@ public class HW7GUI extends JFrame
     firstFrame.setVisible(true);
   }
   
-  JButton btnRead = new JButton("Read File");
-  JButton btnClear = new JButton("Clear DB");
-  JButton btnLoad = new JButton("Load DB");
-  JButton btnCRUD = new JButton("Edit DB");
+  JButton btnRead = new JButton("1. Read File");
+  JButton btnClear = new JButton("2. Clear DB");
+  JButton btnLoad = new JButton("3. Load DB");
+  JButton btnCRUD = new JButton("4. Edit Faculty");
   
   public HW7GUI()
   {
@@ -43,21 +43,21 @@ public class HW7GUI extends JFrame
     btnRead.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if(Person.readPeople())
-          JOptionPane.showMessageDialog(rootPane, "People loaded from file!");
+          JOptionPane.showMessageDialog(rootPane, "People loaded from input file!");
       }
     });
     
     btnClear.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if(Person.clearDB())
-          JOptionPane.showMessageDialog(rootPane, "Database Cleared!");
+          JOptionPane.showMessageDialog(rootPane, "Database records cleared!");
       }
     });
     
     btnLoad.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if(Person.loadDB())
-          JOptionPane.showMessageDialog(rootPane, "Database Loaded!");
+          JOptionPane.showMessageDialog(rootPane, "People loaded into database!");
       }
     });
     
